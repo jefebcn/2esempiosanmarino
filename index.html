@@ -161,6 +161,9 @@
   /* Immagini (e disegno di riserva della bandiera): riempiono il riquadro
      ritagliando il superfluo. onerror rimuove la foto e resta ciò che sta sotto. */
   .flag-img, .flag-fallback, .hero-photo-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* La foto della città è allineata a destra: il ritaglio toglie il lato
+     sinistro e mantiene visibile il panorama sulla destra. */
+  .hero-photo-img { object-position: right center; }
   /* Testo di riserva della 2ª foto (visibile solo se la foto non carica). */
   .hero-photo-fallback { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 10px; text-align: center; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--ink-faint); }
 
