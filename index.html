@@ -247,16 +247,16 @@
   /* ============================================================
      Titano — narrative
      ============================================================ */
-  /* Sfondo: foto del Passo delle Streghe (Wikimedia Commons) con sopra una
-     velatura blu-ardesia per tenere leggibile il testo bianco. Se la foto non
-     carica resta il colore di fondo (var(--ink)) come riserva. */
+  /* Sfondo: foto del Passo delle Streghe (Wikimedia Commons), mostrata piena.
+     Se la foto non carica resta il colore di fondo (var(--ink)) come riserva.
+     Una leggera ombra sul testo (non una velatura sulla foto) ne preserva
+     la leggibilità sopra le zone chiare dell'immagine. */
   #titano {
     background-color: var(--ink);
-    background-image:
-      linear-gradient(rgba(24, 43, 69, 0.84), rgba(24, 43, 69, 0.9)),
-      url("https://commons.wikimedia.org/wiki/Special:FilePath/Passo_delle_Streghe_-_Monte_Titano_-_San_Marino_-_GT_05_-_2024_04_30.jpg?width=1600");
+    background-image: url("https://commons.wikimedia.org/wiki/Special:FilePath/Passo_delle_Streghe_-_Monte_Titano_-_San_Marino_-_GT_05_-_2024_04_30.jpg?width=1600");
     background-size: cover; background-position: center; background-repeat: no-repeat;
     color: var(--paper); overflow: hidden;
+    text-shadow: 0 1px 16px rgba(0, 0, 0, 0.45);
   }
   #titano .eyebrow { color: #df6a45; }
   #titano .eyebrow::before { background: #df6a45; }
