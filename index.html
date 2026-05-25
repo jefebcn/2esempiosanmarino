@@ -127,27 +127,45 @@
   @media (max-width: 460px) { .nav-links { display: none; } }
 
   /* ============================================================
-     Hero / masthead (no foto, tutto tipografico)
+     HERO / masthead — sezione di apertura: titolo a sinistra,
+     bandiera a destra.
      ============================================================ */
+  /* Spazio sopra (sotto la nav fissa) e sotto la sezione hero. */
   .hero { padding-top: calc(var(--nav-h) + clamp(40px, 9vw, 90px)); padding-bottom: clamp(40px, 7vw, 80px); }
+  /* Mobile: una sola colonna (titolo sopra, bandiera sotto). */
   .hero-grid { display: grid; grid-template-columns: 1fr; gap: clamp(28px, 5vw, 60px); }
-  @media (min-width: 900px) { .hero-grid { grid-template-columns: 1.1fr 1fr; align-items: end; } }
+  /* Da 900px: due colonne (testo 1.1 / bandiera 1). align-items:start ancora
+     la bandiera in alto; il margine sulla aside la fa partire all'altezza del
+     titolo (compensa l'ingombro dell'eyebrow sopra il titolo). */
+  @media (min-width: 900px) {
+    .hero-grid { grid-template-columns: 1.1fr 1fr; align-items: start; }
+    .hero-aside { margin-top: 40px; }
+  }
 
+  /* Titolo principale: dimensione fluida da 38px (mobile) a 104px (desktop). */
   .hero h1 {
     font-size: clamp(38px, 8vw, 104px);
     font-weight: 900; letter-spacing: -0.04em; line-height: 0.92;
   }
+  /* Ultima riga del titolo, evidenziata in rosso ossido ("del mondo."). */
   .hero h1 .l2 { color: var(--ossido); display: block; }
-  .hero .lead { font-size: clamp(17px, 2vw, 20px); color: var(--ink-soft); max-width: 46ch; margin-top: 26px; margin-bottom: 0; }
+  /* Paragrafo introduttivo sotto il titolo. */
+  .hero .lead { font-size: clamp(17px, 2vw, 20px); color: var(--ink-soft); max-width: 46ch; margin-top: 26px; }
   .hero .lead strong { color: var(--ink); font-weight: 600; }
 
-  .hero-aside { display: grid; gap: clamp(16px, 2.6vw, 26px); justify-items: start; align-content: end; }
+  /* Colonna destra del hero che contiene la bandiera. */
+  .hero-aside { display: grid; justify-items: start; }
+  /* Riquadro della bandiera: occupa tutta la larghezza della colonna,
+     proporzione 4:3, angoli arrotondati, bordo e ombra. */
   .flag {
-    margin: 0 0 6px; position: relative; width: 100%; max-width: 100%;
+    margin: 0; position: relative; width: 100%; max-width: 100%;
     aspect-ratio: 4 / 3; border-radius: 6px; overflow: hidden;
     border: 1px solid var(--line); background: var(--paper-2);
     box-shadow: 0 16px 44px rgba(24, 43, 69, 0.16);
   }
+  /* Foto della bandiera e disegno di riserva: entrambi riempiono il riquadro
+     (object-fit:cover ritaglia senza deformare). Il disegno sta sotto la foto;
+     se la foto non carica viene rimossa e resta visibile il disegno. */
   .flag-img, .flag-fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 
   /* fact strip */
@@ -296,6 +314,8 @@
     padding: 5px 10px; border: 1px solid var(--line); border-radius: 2px; color: var(--ink-soft); text-transform: uppercase; }
   .torre .tag.no { color: var(--ossido); border-color: color-mix(in srgb, var(--ossido) 40%, transparent); }
   .torre .glyph { height: 64px; display: flex; align-items: flex-end; }
+  /* Riquadro foto di ogni torre: proporzione 4:3, angoli arrotondati.
+     Larghezza = quella della scheda; l'altezza segue (aspect-ratio). */
   .torre-media {
     position: relative; aspect-ratio: 4 / 3; margin-bottom: 4px;
     border-radius: 4px; overflow: hidden;
@@ -303,6 +323,7 @@
     display: flex; align-items: center; justify-content: center;
   }
   .torre-media .glyph { height: auto; align-items: center; }
+  /* La foto riempie il riquadro ritagliando il superfluo (object-fit:cover) */
   .torre-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 
   /* ============================================================
@@ -407,19 +428,24 @@
 </head>
 <body>
 
-<!-- altimeter -->
+<!-- ALTIMETRO: barra di avanzamento in cima alla pagina (<i> si riempie
+     scorrendo) + etichetta con i "metri" simulati di salita sul Titano.
+     Gestiti via JS nella funzione onScroll(). -->
 <div id="altimeter" aria-hidden="true"><i></i></div>
 <div id="alt-tag" aria-hidden="true"><b id="alt-val">0</b> m s.l.m.</div>
 
-<!-- NAV -->
+<!-- BARRA DI NAVIGAZIONE: fissa in alto. A sinistra il logo (tre torri in SVG
+     + nome), a destra i link che portano alle varie sezioni della pagina. -->
 <header class="nav" id="nav">
   <div class="wrap">
+    <!-- Logo/brand: SVG con le tre torri, riporta in cima alla pagina (#top). -->
     <a class="brand" href="#top" aria-label="San Marino — torna su">
       <svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true">
         <g fill="currentColor"><rect x="6" y="14" width="4" height="12"/><rect x="14" y="9" width="4" height="17"/><rect x="22" y="13" width="4" height="13"/></g>
       </svg>
       San Marino<span class="dot">.</span>
     </a>
+    <!-- Link di navigazione: ogni voce salta all'ancora della sezione. -->
     <nav><ul class="nav-links">
       <li><a href="#storia">Storia</a></li>
       <li><a href="#titano">Titano</a></li>
@@ -432,31 +458,43 @@
 
 <main id="top">
 
-  <!-- HERO -->
+  <!-- HERO: apertura della pagina. Colonna sinistra = titolo + testo;
+       colonna destra = bandiera (allineata in alto col titolo). -->
   <section class="hero wrap">
     <div class="hero-grid">
       <div>
+        <!-- Sopratitolo (eyebrow) -->
         <span class="eyebrow">Repubblica di San Marino</span>
+        <!-- Titolo principale: <br> spezza le righe, .l2 colora l'ultima riga -->
         <h1>La repubblica<br>più antica<span class="l2">del mondo.</span></h1>
+        <!-- Testo introduttivo -->
         <p class="lead">Sessantun chilometri quadrati sul versante adriatico dell'Appennino, indipendenti dal <strong>301 d.C.</strong> Una guida al Monte Titano, tutto quello che devi sapere sulla Repubblica.</p>
       </div>
+      <!-- Colonna destra: bandiera della Repubblica -->
       <div class="hero-aside">
         <figure class="flag">
+          <!-- Disegno di riserva (fallback): bandiera stilizzata a bande
+               bianco/azzurro con le tre torri al centro. Resta visibile solo
+               se la foto qui sotto non si carica. -->
           <svg class="flag-fallback" viewBox="0 0 240 180" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
-            <rect x="0" y="0" width="240" height="90" fill="#ffffff"/>
-            <rect x="0" y="90" width="240" height="90" fill="#5eb6e4"/>
-            <circle cx="120" cy="90" r="31" fill="#ffffff" stroke="#182b45" stroke-width="2"/>
-            <g>
+            <rect x="0" y="0" width="240" height="90" fill="#ffffff"/>      <!-- banda bianca (alto) -->
+            <rect x="0" y="90" width="240" height="90" fill="#5eb6e4"/>     <!-- banda azzurra (basso) -->
+            <circle cx="120" cy="90" r="31" fill="#ffffff" stroke="#182b45" stroke-width="2"/> <!-- stemma -->
+            <g><!-- le tre torri dentro lo stemma -->
               <rect x="106" y="88" width="6" height="16" fill="#182b45"/><polygon points="103,88 115,88 109,80" fill="#b14328"/>
               <rect x="116" y="80" width="7" height="24" fill="#182b45"/><polygon points="113,80 126,80 119.5,71" fill="#b14328"/>
               <rect x="127" y="86" width="6" height="18" fill="#182b45"/><polygon points="124,86 136,86 130,78" fill="#b14328"/>
             </g>
           </svg>
+          <!-- Foto reale della bandiera (Wikimedia Commons). width=640 scarica
+               una versione ridimensionata (più leggera). onerror: se non carica
+               viene rimossa e compare il disegno di riserva sopra. -->
           <img class="flag-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Flag_of_San_Marino.svg?width=640" alt="Bandiera della Repubblica di San Marino" loading="lazy" onerror="this.remove()" />
         </figure>
       </div>
     </div>
 
+    <!-- Striscia dati: 4 numeri chiave (superficie, abitanti, altitudine, castelli) -->
     <div class="facts">
       <ul>
         <li><div class="n mono" data-fact="superficie">61,2 <small>km²</small></div><div class="k">Superficie</div></li>
@@ -467,13 +505,15 @@
     </div>
   </section>
 
-  <!-- STORIA -->
+  <!-- STORIA: numero gigante "301" a sinistra, testo + linea del tempo a destra -->
   <section id="storia" class="wrap">
     <div class="storia-grid">
       <div>
         <span class="eyebrow">Storia</span>
+        <!-- "301" enorme col solo contorno (decorativo) -->
         <div class="ghost-num big">301</div>
       </div>
+      <!-- Testo storico + cronologia degli eventi principali -->
       <div class="storia-body">
         <p>La tradizione fa risalire la fondazione al 301 d.C., quando il tagliapietre Marino, in fuga dalle persecuzioni, si rifugiò sul Monte Titano e vi raccolse una piccola comunità cristiana.</p>
         <p>Da quel nucleo nacque una comunità che, protetta dalla posizione e da una caparbia diffidenza verso ogni potere esterno, riuscì ad attraversare i secoli senza essere assorbita dai grandi vicini: i Malatesta, lo Stato Pontificio, i regni e gli imperi che si sono succeduti lungo la penisola.</p>
@@ -489,11 +529,13 @@
     </div>
   </section>
 
-  <!-- TITANO -->
+  <!-- TITANO: sezione su fondo scuro. A sinistra il numero "756 m",
+       a destra il testo descrittivo e l'elenco delle tre cime. -->
   <section id="titano" class="wrap">
     <span class="eyebrow">Salita al Monte Titano</span>
     <div class="titano-wrap">
       <div>
+        <!-- Altitudine in grande -->
         <div class="titano-num">756<span class="m">m</span></div>
         <div class="titano-sub">IL PUNTO PIÙ ALTO · LO SPERONE DELLA CESTA</div>
       </div>
@@ -510,21 +552,26 @@
     </div>
   </section>
 
-  <!-- MAPPA -->
+  <!-- MAPPA INTERATTIVA: a sinistra la mappa SVG cliccabile, a destra l'elenco
+       dei castelli. Hover = nome nel tooltip; click su una zona = apre la scheda. -->
   <section id="mappa" class="wrap">
     <div class="sec-head">
       <div>
         <span class="eyebrow">Mappa interattiva</span>
         <h2>Nove castelli,<br>un territorio.</h2>
       </div>
-      <p class="intro">Le suddivisioni amministrative di San Marino si chiamano castelli (o curazie). Passa il mouse per il nome, tocca o clicca una zona per aprirne la scheda. I tre marker sul centro indicano le torri sul Monte Titano. <em>La forma è stilizzata, non in scala.</em></p>
+      <p class="intro">Le suddivisioni amministrative di San Marino si chiamano castelli (o curazie). Passa il mouse per il nome, tocca o clicca una zona per aprirne la scheda. I tre marker sul centro indicano le torri sul Monte Titano. <em>La mappa riproduce i confini reali dei castelli.</em></p>
     </div>
 
     <div class="map-grid">
+      <!-- Contenitore della mappa: il tooltip segue il mouse (posizionato via JS) -->
       <div class="map-stage" id="map-stage">
         <div class="map-tooltip" id="map-tooltip"></div>
+        <!-- viewBox 1000x1192 = sistema di coordinate interno della mappa.
+             Ogni <path> è un castello; data-i = indice nell'array CASTELLI (JS).
+             Confini reali da geoBoundaries/OSM, proiezione equirettangolare. -->
         <svg viewBox="0 0 1000 1192" role="group" aria-label="Mappa dei nove castelli di San Marino" id="sm-map">
-          <!-- regions: data-i references CASTELLI index. Confini reali (geoBoundaries / OSM), proiezione equirettangolare. -->
+          <!-- I 9 castelli (path) con le rispettive etichette (text) -->
           <g id="regions">
             <path class="region cap" data-i="0" d="M136.4,708.7 L141.3,716.7 L142.6,726.4 L178.9,723.1 L189.4,726.4 L202.7,735.5 L212.9,738.1 L227.3,745.5 L227.7,757.3 L238.5,767.9 L241.5,768.5 L254.2,759.9 L255.7,784.2 L271.4,778.8 L273.4,788.1 L271.8,811.5 L262.6,813.0 L249.3,810.0 L236.6,815.8 L241.6,822.5 L247.1,848.1 L240.7,849.5 L236.7,863.0 L241.3,877.1 L259.4,890.0 L260.5,894.6 L270.3,902.2 L272.9,915.4 L308.6,907.8 L343.6,911.8 L357.7,918.6 L363.0,918.6 L400.0,901.0 L429.2,903.1 L437.0,908.2 L454.6,875.4 L459.1,854.9 L479.5,826.9 L473.3,782.9 L473.8,756.9 L469.2,731.1 L442.0,682.6 L421.4,658.5 L372.7,638.5 L338.6,633.1 L333.3,628.6 L327.3,615.1 L305.1,586.7 L290.8,578.1 L276.7,576.1 L278.3,601.6 L283.5,612.5 L254.9,638.3 L227.4,655.6 L193.6,683.0 L182.8,682.7 L170.5,689.8 L159.0,690.5 L141.9,706.7 L136.4,708.7Z"></path>
             <text class="rlabel on-dark" x="318" y="820">San Marino</text>
@@ -546,7 +593,8 @@
             <text class="rlabel" x="684" y="995">Montegiardino</text>
           </g>
 
-          <!-- towers over the capital (Monte Titano) -->
+          <!-- Le tre torri sopra la capitale (Monte Titano): cerchio tratteggiato
+               + tre marker. Click su un marker = scorre alla sezione "Tre torri". -->
           <g id="towers">
             <circle class="tower-ring" cx="370" cy="700" r="66"></circle>
             <g class="tower-mk" data-tower="0" tabindex="0" role="button" aria-label="Torre Guaita">
@@ -565,6 +613,7 @@
         </svg>
       </div>
 
+      <!-- Colonna destra: elenco/legenda dei castelli, generato via JS in #legend -->
       <div class="map-side">
         <h3>Indice dei castelli</h3>
         <p>Dal più popoloso al più piccolo, ognuno con la sua identità. Seleziona dall'elenco o dalla mappa.</p>
@@ -573,7 +622,8 @@
     </div>
   </section>
 
-  <!-- CASTELLI -->
+  <!-- CASTELLI: griglia di schede, una per castello. Le schede sono create via
+       JS (array CASTELLI) dentro #castelli-grid; il click apre la scheda modale. -->
   <section id="castelli" class="wrap">
     <div class="sec-head">
       <div>
@@ -582,10 +632,11 @@
       </div>
       <p class="intro">Ogni castello ha un proprio consiglio (la Giunta) e un Capitano. Apri una scheda per altitudine, superficie, popolazione e punti di interesse. Dalla scheda puoi scorrere agli altri con le frecce.</p>
     </div>
+    <!-- Contenitore riempito da JS con le schede dei castelli -->
     <div class="castelli-grid" id="castelli-grid"></div>
   </section>
 
-  <!-- TRE TORRI -->
+  <!-- TRE TORRI: tre schede affiancate (Guaita, Cesta, Montale), ognuna con foto -->
   <section id="torri" class="wrap">
     <div class="sec-head">
       <div>
@@ -595,6 +646,11 @@
       <p class="intro">Allineate sulle tre cime del monte, compaiono persino nello stemma e nella bandiera della Repubblica. Due si visitano; la terza non ha mai aperto.</p>
     </div>
     <div class="torri-grid">
+      <!-- SCHEDA TORRE 1 — Guaita.
+           .torre-media: riquadro foto in proporzione 4:3 (vedi CSS). Dentro c'è
+           il disegno di riserva (.glyph) e la foto (.torre-img, width=900 da
+           Wikimedia Commons). Se la foto non carica, onerror la rimuove e resta
+           il disegno. Stessa struttura per le altre due torri. -->
       <article class="torre">
         <div class="torre-media">
           <div class="glyph"><svg width="40" height="64" viewBox="0 0 40 64" aria-hidden="true"><rect x="13" y="20" width="14" height="40" fill="none" stroke="var(--ink)" stroke-width="2.5"/><polygon points="10,20 30,20 20,6" fill="var(--ossido)"/></svg></div>
@@ -631,7 +687,7 @@
     </div>
   </section>
 
-  <!-- SCOPRIRE -->
+  <!-- SCOPRIRE / DA SAPERE: tre colonne (Tradizioni, A tavola, Curiosità) -->
   <section id="scoprire" class="wrap">
     <div class="sec-head">
       <div>
@@ -670,13 +726,14 @@
 
 </main>
 
-<!-- FOOTER -->
+<!-- FOOTER: nota conclusiva, fonti dei dati e crediti/licenza delle foto -->
 <footer class="site" id="footer">
   <div class="wrap">
     <div>
       <h2>San Marino, <span class="ossido">in breve.</span></h2>
       <p>Una guida indipendente al territorio, alle istituzioni e ai luoghi della Repubblica. Superfici e popolazioni da Wikipedia e dall'Ufficio di Statistica (statistica.sm); altitudini e distanze sono approssimate.</p>
     </div>
+    <!-- Crediti e attribuzione foto (licenza CC BY-SA 4.0) -->
     <div class="meta">
       <p>Patrimonio UNESCO dal 2008 · Lingua: italiano · Moneta: euro</p>
       <p>Foto torri via Wikimedia Commons: <a href="https://commons.wikimedia.org/wiki/File:Guaita_Fortress_-_San_Marino_-_2024_02_13_-_GT_02_(details).jpg" target="_blank" rel="noopener">Guaita</a> e <a href="https://commons.wikimedia.org/wiki/File:Torre_Cesta_-_San_Marino_-_GT_01_-_2024_04_30.jpg" target="_blank" rel="noopener">Cesta</a> © <a href="https://commons.wikimedia.org/wiki/User:Terragio67" target="_blank" rel="noopener">Terragio67</a>, <a href="https://commons.wikimedia.org/wiki/File:Montale_Tower.jpg" target="_blank" rel="noopener">Montale</a> © <a href="https://commons.wikimedia.org/wiki/User:Commonists" target="_blank" rel="noopener">Commonists</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a> · Progetto di portfolio</p>
@@ -684,7 +741,9 @@
   </div>
 </footer>
 
-<!-- MODAL -->
+<!-- FINESTRA MODALE (scheda castello): nascosta finché non si clicca un castello.
+     Pulsanti < e > per scorrere tra i castelli, X per chiudere. Il contenuto
+     (#modal-inner) è riempito da JS in base al castello selezionato. -->
 <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="m-title" hidden>
   <button class="m-nav m-prev" id="m-prev" aria-label="Castello precedente">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"/></svg>
@@ -703,6 +762,10 @@
 <script>
 /* ============================================================
    DATI — i numeri vanno verificati/aggiornati prima del deploy.
+   CASTELLI: un oggetto per castello (l'ordine = numerazione mostrata e
+   corrisponde all'attributo data-i dei <path> nella mappa SVG).
+   Campi: nome, cap(=capitale), alt(altitudine), sup(superficie km²),
+   pop(abitanti), dist(distanza dalla capitale), desc(paragrafi), poi(luoghi).
    ============================================================ */
 const CASTELLI = [
   {
@@ -795,13 +858,14 @@ const TORRI = [
 ];
 
 /* ============================================================
-   Render: legend + castelli grid
+   Render: genera, per ogni castello, la voce di legenda (mappa) e la
+   scheda nella griglia dei castelli. Entrambe aprono la modale al click.
    ============================================================ */
 const legendEl = document.getElementById('legend');
 const gridEl = document.getElementById('castelli-grid');
 
 CASTELLI.forEach((c, i) => {
-  // legend
+  // Voce nell'elenco/legenda accanto alla mappa
   const li = document.createElement('li');
   li.dataset.i = i;
   li.innerHTML = `<span class="idx mono">${String(i+1).padStart(2,'0')}</span>
@@ -812,7 +876,7 @@ CASTELLI.forEach((c, i) => {
   li.addEventListener('mouseleave', () => highlight(i, false));
   legendEl.appendChild(li);
 
-  // card
+  // Scheda nella griglia dei castelli
   const card = document.createElement('button');
   card.className = 'cc';
   card.dataset.i = i;
@@ -831,18 +895,21 @@ CASTELLI.forEach((c, i) => {
 });
 
 /* ============================================================
-   Map interactions
+   Interazioni mappa: hover/click sui castelli e sulle torri.
    ============================================================ */
 const regions = Array.from(document.querySelectorAll('.region'));
 const tooltip = document.getElementById('map-tooltip');
 const stage = document.getElementById('map-stage');
 const legendItems = Array.from(legendEl.children);
 
+// Evidenzia/disevidenzia insieme il castello sulla mappa e nell'elenco
 function highlight(i, on) {
   regions.forEach(r => { if (+r.dataset.i === i) r.classList.toggle('is-active', on); });
   legendItems.forEach(li => { if (+li.dataset.i === i) li.classList.toggle('is-active', on); });
 }
 
+// Per ogni zona della mappa: rende cliccabile/navigabile da tastiera,
+// mostra il tooltip col nome al passaggio del mouse e apre la scheda al click
 regions.forEach(r => {
   const i = +r.dataset.i;
   r.setAttribute('tabindex', '0');
@@ -878,14 +945,15 @@ document.querySelectorAll('.tower-mk').forEach(t => {
 });
 
 /* ============================================================
-   Modal
+   Finestra modale (scheda castello): apertura, chiusura, navigazione.
    ============================================================ */
 const overlay = document.getElementById('overlay');
 const inner = document.getElementById('modal-inner');
 const modalBox = document.getElementById('modal');
-let current = -1;
-let lastFocus = null;
+let current = -1;        // indice del castello attualmente aperto (-1 = chiusa)
+let lastFocus = null;    // elemento da cui si è aperta la modale (per ridare il focus)
 
+// Costruisce il contenuto HTML della scheda per il castello i-esimo
 function renderModal(i) {
   const c = CASTELLI[i];
   inner.innerHTML = `
@@ -920,6 +988,7 @@ function highlightOnly(i) {
   legendItems.forEach(li => li.classList.toggle('is-active', +li.dataset.i === i));
 }
 
+// Apre la modale sul castello i (blocca lo scroll della pagina dietro)
 function openModal(i) {
   lastFocus = document.activeElement;
   renderModal(i);
@@ -929,6 +998,7 @@ function openModal(i) {
   document.getElementById('m-close').focus();
 }
 
+// Chiude la modale e ripristina scroll/evidenziazioni/focus
 function closeModal() {
   overlay.classList.remove('open');
   overlay.hidden = true;
@@ -939,17 +1009,20 @@ function closeModal() {
   current = -1;
 }
 
+// Passa al castello precedente/successivo (dir = -1 o +1, scorrimento circolare)
 function navModal(dir) {
   if (current < 0) return;
   const next = (current + dir + CASTELLI.length) % CASTELLI.length;
   renderModal(next);
 }
 
+// Pulsanti chiudi / precedente / successivo e click sullo sfondo per chiudere
 document.getElementById('m-close').addEventListener('click', closeModal);
 document.getElementById('m-prev').addEventListener('click', () => navModal(-1));
 document.getElementById('m-next').addEventListener('click', () => navModal(1));
 overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
 
+// Tastiera (solo a modale aperta): Esc chiude, frecce scorrono i castelli
 document.addEventListener('keydown', e => {
   if (overlay.hidden) return;
   if (e.key === 'Escape') closeModal();
@@ -957,7 +1030,7 @@ document.addEventListener('keydown', e => {
   else if (e.key === 'ArrowLeft') navModal(-1);
 });
 
-// swipe (mobile)
+// Swipe su touch: trascinamento orizzontale > 60px = castello prec./succ.
 let touchX = null;
 modalBox.addEventListener('touchstart', e => { touchX = e.changedTouches[0].clientX; }, { passive: true });
 modalBox.addEventListener('touchend', e => {
@@ -968,14 +1041,16 @@ modalBox.addEventListener('touchend', e => {
 }, { passive: true });
 
 /* ============================================================
-   Nav state + altimeter (Salita al Titano)
+   Stato nav + altimetro: in base allo scroll aggiorna l'ombra della nav,
+   la barra di avanzamento e i "metri" simulati (0 → 756 m del Titano).
    ============================================================ */
 const nav = document.getElementById('nav');
 const altBar = document.querySelector('#altimeter > i');
 const altVal = document.getElementById('alt-val');
 const altTag = document.getElementById('alt-tag');
-const TITANO_M = 756;
+const TITANO_M = 756;   // altezza usata per mappare lo scroll in "metri"
 
+// p = percentuale di pagina scrollata (0..1); aggiorna barra ed etichetta
 function onScroll() {
   const y = window.scrollY;
   nav.classList.toggle('scrolled', y > 8);
