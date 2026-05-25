@@ -131,11 +131,11 @@
      ============================================================ */
   .hero { padding-top: calc(var(--nav-h) + clamp(40px, 9vw, 90px)); padding-bottom: clamp(40px, 7vw, 80px); }
   .hero-grid { display: grid; grid-template-columns: 1fr; gap: clamp(28px, 5vw, 60px); }
-  @media (min-width: 900px) { .hero-grid { grid-template-columns: 1.45fr 1fr; align-items: end; } }
+  @media (min-width: 900px) { .hero-grid { grid-template-columns: 1.1fr 1fr; align-items: end; } }
 
   .hero h1 {
-    font-size: clamp(46px, 13vw, 168px);
-    font-weight: 900; letter-spacing: -0.045em; line-height: 0.88;
+    font-size: clamp(38px, 8vw, 104px);
+    font-weight: 900; letter-spacing: -0.04em; line-height: 0.92;
   }
   .hero h1 .l2 { color: var(--ossido); display: block; }
   .hero .lead { font-size: clamp(17px, 2vw, 20px); color: var(--ink-soft); max-width: 46ch; margin-top: 26px; }
@@ -151,7 +151,7 @@
 
   .hero-aside { display: grid; gap: clamp(16px, 2.6vw, 26px); justify-items: start; align-content: end; }
   .flag {
-    margin: 0; position: relative; width: 100%; max-width: 380px;
+    margin: 0; position: relative; width: 100%; max-width: 100%;
     aspect-ratio: 4 / 3; border-radius: 6px; overflow: hidden;
     border: 1px solid var(--line); background: var(--paper-2);
     box-shadow: 0 16px 44px rgba(24, 43, 69, 0.16);
