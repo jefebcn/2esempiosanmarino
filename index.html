@@ -247,7 +247,17 @@
   /* ============================================================
      Titano — narrative
      ============================================================ */
-  #titano { background: var(--ink); color: var(--paper); overflow: hidden; }
+  /* Sfondo: foto del Passo delle Streghe (Wikimedia Commons) con sopra una
+     velatura blu-ardesia per tenere leggibile il testo bianco. Se la foto non
+     carica resta il colore di fondo (var(--ink)) come riserva. */
+  #titano {
+    background-color: var(--ink);
+    background-image:
+      linear-gradient(rgba(24, 43, 69, 0.84), rgba(24, 43, 69, 0.9)),
+      url("https://commons.wikimedia.org/wiki/Special:FilePath/Passo_delle_Streghe_-_Monte_Titano_-_San_Marino_-_GT_05_-_2024_04_30.jpg?width=1600");
+    background-size: cover; background-position: center; background-repeat: no-repeat;
+    color: var(--paper); overflow: hidden;
+  }
   #titano .eyebrow { color: #df6a45; }
   #titano .eyebrow::before { background: #df6a45; }
   .titano-wrap { display: grid; gap: clamp(30px, 5vw, 56px); align-items: center; }
@@ -788,7 +798,7 @@
     <!-- Crediti e attribuzione foto (licenza CC BY-SA 4.0) -->
     <div class="meta">
       <p>Patrimonio UNESCO dal 2008 · Lingua: italiano · Moneta: euro</p>
-      <p>Foto via Wikimedia Commons: <a href="https://commons.wikimedia.org/wiki/File:Guaita_Fortress_and_San_Marino_(2023).jpg" target="_blank" rel="noopener">Guaita e San Marino</a> e torri <a href="https://commons.wikimedia.org/wiki/File:Guaita_Fortress_-_San_Marino_-_2024_02_13_-_GT_02_(details).jpg" target="_blank" rel="noopener">Guaita</a> e <a href="https://commons.wikimedia.org/wiki/File:Torre_Cesta_-_San_Marino_-_GT_01_-_2024_04_30.jpg" target="_blank" rel="noopener">Cesta</a> © <a href="https://commons.wikimedia.org/wiki/User:Terragio67" target="_blank" rel="noopener">Terragio67</a>, <a href="https://commons.wikimedia.org/wiki/File:Montale_Tower.jpg" target="_blank" rel="noopener">Montale</a> © <a href="https://commons.wikimedia.org/wiki/User:Commonists" target="_blank" rel="noopener">Commonists</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a> · Progetto di portfolio</p>
+      <p>Foto via Wikimedia Commons: <a href="https://commons.wikimedia.org/wiki/File:Guaita_Fortress_and_San_Marino_(2023).jpg" target="_blank" rel="noopener">Guaita e San Marino</a>, sfondo <a href="https://commons.wikimedia.org/wiki/File:Passo_delle_Streghe_-_Monte_Titano_-_San_Marino_-_GT_05_-_2024_04_30.jpg" target="_blank" rel="noopener">Passo delle Streghe</a> e torri <a href="https://commons.wikimedia.org/wiki/File:Guaita_Fortress_-_San_Marino_-_2024_02_13_-_GT_02_(details).jpg" target="_blank" rel="noopener">Guaita</a> e <a href="https://commons.wikimedia.org/wiki/File:Torre_Cesta_-_San_Marino_-_GT_01_-_2024_04_30.jpg" target="_blank" rel="noopener">Cesta</a> © <a href="https://commons.wikimedia.org/wiki/User:Terragio67" target="_blank" rel="noopener">Terragio67</a>, <a href="https://commons.wikimedia.org/wiki/File:Montale_Tower.jpg" target="_blank" rel="noopener">Montale</a> © <a href="https://commons.wikimedia.org/wiki/User:Commonists" target="_blank" rel="noopener">Commonists</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a> · Progetto di portfolio</p>
     </div>
   </div>
 </footer>
