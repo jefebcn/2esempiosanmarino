@@ -177,18 +177,41 @@
     .flag, .hero-photo { aspect-ratio: auto; flex: 1 1 0; min-height: 0; }
   }
 
-  /* fact strip */
-  .facts { margin-top: clamp(40px, 6vw, 70px); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  /* ============================================================
+     Striscia dati (facts): i 4 numeri chiave sotto il hero.
+     Numeri in Inter (cifre tabulari per allineamento), unità in rosso ossido,
+     etichette in mono. Ogni cella ha un accento e un leggero hover.
+     ============================================================ */
+  .facts { margin-top: clamp(40px, 6vw, 70px); border-top: 1px solid var(--line); }
   .facts ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); }
   @media (min-width: 760px) { .facts ul { grid-template-columns: repeat(4, 1fr); } }
-  .facts li { padding: 22px 0; border-right: 1px solid var(--line-soft); }
-  .facts li:not(:last-child) { padding-right: 16px; }
-  @media (min-width: 760px) { .facts li { padding-right: 16px; } }
+  /* Cella: bordi sottili a griglia, accento in alto e sfondo all'hover */
+  .facts li {
+    position: relative; padding: 30px 22px 26px;
+    border-right: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft);
+    transition: background .2s ease;
+  }
+  .facts li:hover { background: var(--paper-2); }
+  /* Trattino di accento (rosso ossido) in cima alla cella, si allunga all'hover */
+  .facts li::before {
+    content: ""; position: absolute; top: -1px; left: 22px;
+    width: 22px; height: 2px; background: var(--ossido);
+    opacity: 0; transition: opacity .2s ease, width .2s ease;
+  }
+  .facts li:hover::before { opacity: 1; width: 40px; }
+  /* Toglie il bordo destro a fine riga (2 colonne su mobile, 4 su desktop) */
   @media (max-width: 759px) { .facts li:nth-child(2n) { border-right: 0; } }
   @media (min-width: 760px) { .facts li:last-child { border-right: 0; } }
-  .facts .n { font-family: var(--display); font-weight: 800; font-size: clamp(26px, 4vw, 38px); letter-spacing: -0.02em; }
-  .facts .n small { font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--ink-soft); letter-spacing: 0; }
-  .facts .k { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); margin-top: 4px; }
+  /* Numero grande: Inter, peso 800, cifre tabulari, unità a fianco in ossido */
+  .facts .n {
+    font-family: var(--body); font-weight: 800; font-size: clamp(28px, 4vw, 42px);
+    letter-spacing: -0.03em; line-height: 1; color: var(--ink);
+    font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1;
+    display: flex; align-items: baseline; gap: 5px;
+  }
+  .facts .n small { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--ossido); letter-spacing: 0; }
+  /* Etichetta sotto il numero: mono, maiuscoletto spaziato */
+  .facts .k { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-faint); margin-top: 10px; }
 
   /* ============================================================
      Section titles
