@@ -132,15 +132,8 @@
      ============================================================ */
   /* Spazio sopra (sotto la nav fissa) e sotto la sezione hero. */
   .hero { padding-top: calc(var(--nav-h) + clamp(40px, 9vw, 90px)); padding-bottom: clamp(40px, 7vw, 80px); }
-  /* Mobile: una sola colonna (titolo sopra, bandiera sotto). */
+  /* Mobile: una sola colonna (titolo sopra, immagini sotto). */
   .hero-grid { display: grid; grid-template-columns: 1fr; gap: clamp(28px, 5vw, 60px); }
-  /* Da 900px: due colonne (testo 1.1 / bandiera 1). align-items:start ancora
-     la bandiera in alto; il margine sulla aside la fa partire all'altezza del
-     titolo (compensa l'ingombro dell'eyebrow sopra il titolo). */
-  @media (min-width: 900px) {
-    .hero-grid { grid-template-columns: 1.1fr 1fr; align-items: start; }
-    .hero-aside { margin-top: 40px; }
-  }
 
   /* Titolo principale: dimensione fluida da 38px (mobile) a 104px (desktop). */
   .hero h1 {
@@ -149,24 +142,37 @@
   }
   /* Ultima riga del titolo, evidenziata in rosso ossido ("del mondo."). */
   .hero h1 .l2 { color: var(--ossido); display: block; }
-  /* Paragrafo introduttivo sotto il titolo. */
-  .hero .lead { font-size: clamp(17px, 2vw, 20px); color: var(--ink-soft); max-width: 46ch; margin-top: 26px; }
+  /* Paragrafo introduttivo (margin-bottom:0 = la colonna finisce esattamente
+     dove finisce il testo, per allinearla in basso alla seconda foto). */
+  .hero .lead { font-size: clamp(17px, 2vw, 20px); color: var(--ink-soft); max-width: 46ch; margin: 26px 0 0; }
   .hero .lead strong { color: var(--ink); font-weight: 600; }
 
-  /* Colonna destra del hero che contiene la bandiera. */
-  .hero-aside { display: grid; justify-items: start; }
-  /* Riquadro della bandiera: occupa tutta la larghezza della colonna,
-     proporzione 4:3, angoli arrotondati, bordo e ombra. */
-  .flag {
+  /* Colonna destra del hero: bandiera (sopra) + foto (sotto), impilate. */
+  .hero-aside { display: flex; flex-direction: column; gap: 16px; }
+  /* Riquadri delle due immagini: larghezza piena della colonna, angoli
+     arrotondati, bordo e ombra. Su mobile l'altezza segue la proporzione 4:3;
+     da 900px diventano di pari altezza (vedi media query in fondo). */
+  .flag, .hero-photo {
     margin: 0; position: relative; width: 100%; max-width: 100%;
     aspect-ratio: 4 / 3; border-radius: 6px; overflow: hidden;
     border: 1px solid var(--line); background: var(--paper-2);
     box-shadow: 0 16px 44px rgba(24, 43, 69, 0.16);
   }
-  /* Foto della bandiera e disegno di riserva: entrambi riempiono il riquadro
-     (object-fit:cover ritaglia senza deformare). Il disegno sta sotto la foto;
-     se la foto non carica viene rimossa e resta visibile il disegno. */
-  .flag-img, .flag-fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* Immagini (e disegno di riserva della bandiera): riempiono il riquadro
+     ritagliando il superfluo. onerror rimuove la foto e resta ciò che sta sotto. */
+  .flag-img, .flag-fallback, .hero-photo-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* Testo di riserva della 2ª foto (visibile solo se la foto non carica). */
+  .hero-photo-fallback { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 10px; text-align: center; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--ink-faint); }
+
+  /* Da 900px: due colonne (testo 1.1 / immagini 1) e righe stirate alla stessa
+     altezza. padding-top sulla aside = compensa l'eyebrow, così la 1ª foto parte
+     all'altezza del titolo; flex:1 rende le due foto di pari altezza e fa
+     terminare la 2ª in fondo al testo. */
+  @media (min-width: 900px) {
+    .hero-grid { grid-template-columns: 1.1fr 1fr; align-items: stretch; }
+    .hero-aside { padding-top: 40px; }
+    .flag, .hero-photo { aspect-ratio: auto; flex: 1 1 0; min-height: 0; }
+  }
 
   /* fact strip */
   .facts { margin-top: clamp(40px, 6vw, 70px); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
@@ -491,6 +497,13 @@
                viene rimossa e compare il disegno di riserva sopra. -->
           <img class="flag-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Flag_of_San_Marino.svg?width=640" alt="Bandiera della Repubblica di San Marino" loading="lazy" onerror="this.remove()" />
         </figure>
+        <!-- Seconda immagine: la fortezza Guaita e San Marino (Wikimedia Commons).
+             Stessa dimensione della bandiera (vedi CSS). Se non carica, resta
+             visibile l'etichetta di riserva sotto. -->
+        <figure class="hero-photo">
+          <span class="hero-photo-fallback">Guaita · San Marino</span>
+          <img class="hero-photo-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Guaita_Fortress_and_San_Marino_(2023).jpg?width=900" alt="La fortezza Guaita e San Marino (2023)" loading="lazy" onerror="this.remove()" />
+        </figure>
       </div>
     </div>
 
@@ -736,7 +749,7 @@
     <!-- Crediti e attribuzione foto (licenza CC BY-SA 4.0) -->
     <div class="meta">
       <p>Patrimonio UNESCO dal 2008 · Lingua: italiano · Moneta: euro</p>
-      <p>Foto torri via Wikimedia Commons: <a href="https://commons.wikimedia.org/wiki/File:Guaita_Fortress_-_San_Marino_-_2024_02_13_-_GT_02_(details).jpg" target="_blank" rel="noopener">Guaita</a> e <a href="https://commons.wikimedia.org/wiki/File:Torre_Cesta_-_San_Marino_-_GT_01_-_2024_04_30.jpg" target="_blank" rel="noopener">Cesta</a> © <a href="https://commons.wikimedia.org/wiki/User:Terragio67" target="_blank" rel="noopener">Terragio67</a>, <a href="https://commons.wikimedia.org/wiki/File:Montale_Tower.jpg" target="_blank" rel="noopener">Montale</a> © <a href="https://commons.wikimedia.org/wiki/User:Commonists" target="_blank" rel="noopener">Commonists</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a> · Progetto di portfolio</p>
+      <p>Foto via Wikimedia Commons: <a href="https://commons.wikimedia.org/wiki/File:Guaita_Fortress_and_San_Marino_(2023).jpg" target="_blank" rel="noopener">Guaita e San Marino</a> e torri <a href="https://commons.wikimedia.org/wiki/File:Guaita_Fortress_-_San_Marino_-_2024_02_13_-_GT_02_(details).jpg" target="_blank" rel="noopener">Guaita</a> e <a href="https://commons.wikimedia.org/wiki/File:Torre_Cesta_-_San_Marino_-_GT_01_-_2024_04_30.jpg" target="_blank" rel="noopener">Cesta</a> © <a href="https://commons.wikimedia.org/wiki/User:Terragio67" target="_blank" rel="noopener">Terragio67</a>, <a href="https://commons.wikimedia.org/wiki/File:Montale_Tower.jpg" target="_blank" rel="noopener">Montale</a> © <a href="https://commons.wikimedia.org/wiki/User:Commonists" target="_blank" rel="noopener">Commonists</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a> · Progetto di portfolio</p>
     </div>
   </div>
 </footer>
