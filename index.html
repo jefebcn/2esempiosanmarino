@@ -149,6 +149,15 @@
   }
   .mark301 small { display: block; font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; color: var(--ink-soft); margin-top: 4px; transform: none; }
 
+  .hero-aside { display: grid; gap: clamp(16px, 2.6vw, 26px); justify-items: start; align-content: end; }
+  .flag {
+    margin: 0; position: relative; width: 100%; max-width: 380px;
+    aspect-ratio: 4 / 3; border-radius: 6px; overflow: hidden;
+    border: 1px solid var(--line); background: var(--paper-2);
+    box-shadow: 0 16px 44px rgba(24, 43, 69, 0.16);
+  }
+  .flag-img, .flag-fallback { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+
   /* fact strip */
   .facts { margin-top: clamp(40px, 6vw, 70px); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .facts ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); }
@@ -436,10 +445,23 @@
     <div class="hero-grid">
       <div>
         <span class="eyebrow">Repubblica di San Marino</span>
-        <h1>Il più antico<br>stato sovrano<span class="l2">ancora in piedi.</span></h1>
-        <p class="lead">Sessantun chilometri quadrati sul versante adriatico dell'Appennino, indipendenti dal <strong>301 d.C.</strong> Una guida al Monte Titano, alle tre torri e ai nove castelli che compongono la Repubblica.</p>
+        <h1>La repubblica<br>più antica<span class="l2">del mondo.</span></h1>
+        <p class="lead">Sessantun chilometri quadrati sul versante adriatico dell'Appennino, indipendenti dal <strong>301 d.C.</strong> Una guida al Monte Titano, tutto quello che devi sapere sulla Repubblica.</p>
       </div>
-      <div style="justify-self: start;">
+      <div class="hero-aside">
+        <figure class="flag">
+          <svg class="flag-fallback" viewBox="0 0 240 180" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+            <rect x="0" y="0" width="240" height="90" fill="#ffffff"/>
+            <rect x="0" y="90" width="240" height="90" fill="#5eb6e4"/>
+            <circle cx="120" cy="90" r="31" fill="#ffffff" stroke="#182b45" stroke-width="2"/>
+            <g>
+              <rect x="106" y="88" width="6" height="16" fill="#182b45"/><polygon points="103,88 115,88 109,80" fill="#b14328"/>
+              <rect x="116" y="80" width="7" height="24" fill="#182b45"/><polygon points="113,80 126,80 119.5,71" fill="#b14328"/>
+              <rect x="127" y="86" width="6" height="18" fill="#182b45"/><polygon points="124,86 136,86 130,78" fill="#b14328"/>
+            </g>
+          </svg>
+          <img class="flag-img" src="https://commons.wikimedia.org/wiki/Special:FilePath/Flag_of_San_Marino.svg?width=640" alt="Bandiera della Repubblica di San Marino" loading="lazy" onerror="this.remove()" />
+        </figure>
         <span class="mark301">301 d.C.<small>FONDAZIONE · TRADIZIONE</small></span>
       </div>
     </div>
