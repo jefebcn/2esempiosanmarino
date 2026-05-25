@@ -250,17 +250,30 @@
   #titano { background: var(--ink); color: var(--paper); overflow: hidden; }
   #titano .eyebrow { color: #df6a45; }
   #titano .eyebrow::before { background: #df6a45; }
-  .titano-wrap { display: grid; gap: 30px; align-items: center; }
+  .titano-wrap { display: grid; gap: clamp(30px, 5vw, 56px); align-items: center; }
   @media (min-width: 880px) { .titano-wrap { grid-template-columns: 1fr 0.9fr; } }
-  .titano-num { font-family: var(--display); font-weight: 900; letter-spacing: -0.05em; line-height: 0.78;
-    font-size: clamp(120px, 30vw, 360px); }
-  .titano-num .m { color: #df6a45; font-size: 0.28em; vertical-align: super; letter-spacing: -0.02em; }
-  .titano-sub { font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #c9d2df; margin-top: 6px; }
+  /* Numero grande dell'altitudine: "m" allineato alla base (flex baseline)
+     invece che in apice, per un effetto più pulito. line-height 0.9 evita che
+     le cifre invadano l'etichetta sottostante. */
+  .titano-num {
+    font-family: var(--display); font-weight: 900; letter-spacing: -0.04em;
+    line-height: 0.9; font-size: clamp(96px, 22vw, 250px); color: var(--paper);
+    display: flex; align-items: baseline; gap: 0.06em;
+  }
+  .titano-num .m { color: #df6a45; font-size: 0.26em; font-weight: 800; letter-spacing: 0; }
+  /* Etichetta sotto il numero: separata da un filo divisore così non si
+     sovrappone più alle cifre. */
+  .titano-sub {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: #9fb0c4; max-width: 34ch;
+    margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(241, 236, 225, 0.16);
+  }
   .titano-txt p { color: #d6dce6; max-width: 50ch; }
   .titano-txt h2 { color: var(--paper); font-size: clamp(28px, 4vw, 44px); margin-bottom: 18px; }
-  .peaks { list-style: none; padding: 0; margin: 26px 0 0; display: grid; gap: 12px; }
-  .peaks li { display: flex; align-items: baseline; gap: 14px; border-top: 1px solid rgba(241,236,225,.16); padding-top: 12px; }
-  .peaks .pk { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; color: #df6a45; text-transform: uppercase; min-width: 86px; }
+  .peaks { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 0; }
+  .peaks li { display: flex; align-items: baseline; gap: 16px; border-top: 1px solid rgba(241,236,225,.16); padding: 14px 0; }
+  .peaks li:last-child { border-bottom: 1px solid rgba(241,236,225,.16); }
+  .peaks .pk { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; color: #df6a45; text-transform: uppercase; min-width: 92px; }
   .peaks .pd { color: #c9d2df; font-size: 15px; }
 
   /* ============================================================
